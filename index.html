@@ -1,0 +1,719 @@
+<title>Althea · Hogar &amp; Mascotas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Cuidamos tu casa y tus mascotas mientras viajás o trabajás. Salta y alrededores: Vaqueros, San Lorenzo, Cerrillos y San Luis.">
+<meta name="theme-color" content="#0c1830">
+<link rel="icon" type="image/webp" href="img/althea-icono.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@600&display=swap" rel="stylesheet">
+<style>
+/* Concepto: el viaje del dueño. La página es un pase de abordar: tablero de salidas, pasajes con talón
+   para cada plan y el calendario del turno minero. Noche azul arriba, papel crema donde se lee. */
+:root{
+  --noche:#0c1830;      /* fondo principal */
+  --noche-2:#14264a;    /* superficies sobre la noche */
+  --linea-n:#2a3d66;    /* bordes sobre la noche */
+  --papel:#f6efe1;      /* fondo de lectura */
+  --papel-2:#fffaf0;    /* tarjetas sobre papel */
+  --linea-p:#e3d5b8;    /* bordes sobre papel */
+  --tinta:#13213d;      /* texto sobre papel */
+  --gris:#5a6274;       /* texto secundario sobre papel */
+  --niebla:#b9c3d8;     /* texto secundario sobre la noche */
+  --crema:#f7f1e4;      /* texto sobre la noche */
+  --oro:#d0a95e;        /* acento */
+  --oro-claro:#ecd29a;
+  --oro-tinta:#7a5a1c;  /* oro legible sobre papel */
+  --display:'Fraunces', Georgia, 'Times New Roman', serif;
+  --texto:'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --r:22px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{font-family:var(--texto);background:var(--noche);color:var(--crema);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--noche)}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--oro);outline-offset:3px;border-radius:8px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.wrap{width:100%;max-width:1180px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.papel{background:var(--papel);color:var(--tinta)}
+.banda{padding-block:clamp(72px,10vw,128px)}
+h1,h2,h3{text-wrap:balance;line-height:1.05;font-weight:600}
+h2{font-family:var(--display);font-size:clamp(38px,5.6vw,68px);letter-spacing:-.025em;font-variation-settings:"opsz" 144}
+h2 em{font-style:italic;font-weight:400;color:var(--oro)}
+.papel h2 em{color:var(--oro-tinta)}
+.etiqueta{font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--oro)}
+.papel .etiqueta{color:var(--oro-tinta)}
+.bajada{font-size:clamp(17px,1.6vw,19px);max-width:58ch;color:var(--niebla)}
+.papel .bajada{color:var(--gris)}
+.cabeza{display:grid;gap:18px;margin-bottom:clamp(40px,6vw,64px)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;font-size:16px;text-decoration:none;border-radius:999px;padding:15px 26px;transition:transform .3s var(--ease),background .2s,color .2s,border-color .2s;cursor:pointer;border:0;font-family:inherit}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-oro{background:var(--oro);color:var(--noche)}
+.btn-oro:hover{background:var(--oro-claro);transform:translateY(-2px)}
+.btn-linea{border:1.5px solid var(--linea-n);color:var(--crema)}
+.btn-linea:hover{border-color:var(--oro);color:var(--oro-claro)}
+
+/* barra superior */
+.barra{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgb(12 24 48 / .86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--linea-n)}
+.barra .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:70px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none}
+.marca img{width:40px;height:40px;border-radius:11px;background:var(--papel-2);padding:3px}
+.marca b{display:block;font-weight:800;letter-spacing:.2em;font-size:16px;line-height:1}
+.marca small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--oro);margin-top:5px}
+.nav{display:flex;gap:clamp(14px,2vw,28px);white-space:nowrap}
+.nav a{text-decoration:none;font-size:14.5px;font-weight:600;color:var(--niebla);transition:color .2s}
+.nav a:hover{color:var(--oro-claro)}
+.barra .btn{padding:10px 18px;font-size:14px}
+@media (max-width:1040px){.nav{display:none}}
+@media (max-width:440px){.barra .btn span{display:none}.barra .btn{padding:11px}}
+
+/* inicio */
+.hero{position:relative;overflow:hidden;padding-block:clamp(56px,8vw,104px) clamp(64px,8vw,112px);
+  background:
+    radial-gradient(1.5px 1.5px at 12% 22%,rgb(247 241 228 / .7),transparent 60%),
+    radial-gradient(1px 1px at 28% 68%,rgb(247 241 228 / .5),transparent 60%),
+    radial-gradient(1.5px 1.5px at 56% 14%,rgb(247 241 228 / .6),transparent 60%),
+    radial-gradient(1px 1px at 72% 40%,rgb(247 241 228 / .45),transparent 60%),
+    radial-gradient(1.5px 1.5px at 88% 78%,rgb(247 241 228 / .55),transparent 60%),
+    radial-gradient(1px 1px at 40% 88%,rgb(247 241 228 / .4),transparent 60%),
+    radial-gradient(ellipse 70% 80% at 85% 10%,#24407a 0,transparent 70%),
+    var(--noche)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(40px,6vw,80px);align-items:center;position:relative}
+.hero-texto{min-width:0}
+.hero .etiqueta{display:inline-flex;align-items:center;gap:10px}
+.hero .etiqueta::before{content:"";width:28px;height:1.5px;background:var(--oro)}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(58px,9.6vw,128px);letter-spacing:-.045em;line-height:.92;margin:22px 0 0;font-variation-settings:"opsz" 144}
+.hero h1 span{display:block}
+.hero h1 em{display:block;font-style:italic;color:var(--oro);font-size:.48em;letter-spacing:-.02em;line-height:1.1;margin-top:18px}
+.hero p.bajada{margin:28px 0 36px;color:var(--niebla)}
+.acciones{display:flex;flex-wrap:wrap;gap:14px}
+
+.escena{position:relative;min-width:0;justify-self:center;width:100%;max-width:470px;aspect-ratio:4/5}
+.escena .foto{position:absolute;inset:0 8% 14% 0;border-radius:200px 200px var(--r) var(--r);overflow:hidden;border:1px solid var(--linea-n)}
+.escena .foto img{width:100%;height:100%;object-fit:cover;object-position:50% 70%;filter:saturate(.9)}
+.escena .foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgb(12 24 48 / .55))}
+
+/* pase de abordar */
+.pase{position:absolute;right:0;bottom:0;width:min(330px,82%);transform:rotate(-4deg);animation:llega 1.2s var(--ease) both .2s;filter:drop-shadow(0 30px 40px rgb(0 0 0 / .45));color:var(--tinta)}
+@keyframes llega{from{transform:rotate(-12deg) translate(40px,40px);opacity:.3}}
+.pase-cuerpo{background:var(--papel-2);border-radius:18px 18px 0 0;overflow:hidden}
+.pase-banda{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:var(--tinta);color:var(--crema);border-bottom:3px solid var(--oro)}
+.pase-banda b{font-family:var(--mono);font-size:11px;letter-spacing:.24em}
+.pase-banda svg{width:20px;height:20px;fill:var(--oro);transform:rotate(45deg)}
+.ruta{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:10px;padding:16px 18px 6px}
+.chico{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;color:var(--oro-tinta);font-weight:600}
+.ruta strong{font-family:var(--display);font-size:38px;font-weight:600;line-height:1;letter-spacing:-.02em}
+.ruta .fin{text-align:right}
+.ruta .fin strong{font-style:italic;font-weight:400;font-size:26px}
+.ruta i{height:2px;margin-bottom:14px;background:repeating-linear-gradient(90deg,var(--oro) 0 6px,transparent 6px 11px)}
+.pase-campos{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;padding:10px 18px 16px;font-weight:700;font-size:14px;line-height:1.3}
+.pase-campos .ancho{grid-column:1/-1}
+.pase-campos .al{font-family:var(--display);font-size:24px;font-weight:600}
+.perfo{height:22px;background:var(--papel-2);position:relative}
+.perfo::before,.perfo::after{content:"";position:absolute;top:0;width:22px;height:22px;border-radius:50%;background:var(--noche)}
+.perfo::before{left:-11px}.perfo::after{right:-11px}
+.perfo i{position:absolute;left:18px;right:18px;top:10px;border-top:2px dashed rgb(19 33 61 / .25)}
+.pase-pie{background:var(--papel-2);border-radius:0 0 18px 18px;padding:4px 18px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:700;font-size:13px}
+.barras{display:flex;gap:2px;height:34px}
+.barras span{background:var(--tinta)}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.escena{max-width:420px}}
+
+/* tablero de salidas */
+.tablero-banda{border-block:1px solid var(--linea-n);background:#08122a;padding-block:clamp(40px,6vw,64px)}
+.tablero-banda .wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;align-items:center}
+.tablero-banda h2{font-size:clamp(32px,4vw,48px);margin-top:12px}
+.tablero-banda p{color:var(--niebla);margin-top:14px;max-width:44ch}
+.tablero{font-weight:600;background:#050c1e;border:1px solid var(--linea-n);border-radius:16px;padding:18px clamp(12px,2vw,22px);font-family:var(--mono);min-width:0}
+.fila{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(8px,2vw,24px);padding:7px 0;border-bottom:1px solid #16244a}
+.fila:last-child{border-bottom:0}
+.fila.titulo{font-size:10.5px;letter-spacing:.22em;color:var(--niebla);padding-bottom:10px}
+.flaps{display:flex;gap:2px;min-width:0}
+.flaps span{flex:1 1 0;min-width:0;max-width:24px;aspect-ratio:3/4;display:grid;place-items:center;background:linear-gradient(#14213f 50%,#101b35 50%);border-radius:3px;color:var(--crema);font-size:clamp(9px,1.4vw,15px);font-weight:600;position:relative}
+.flaps span::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:#050c1e}
+.flaps.ok span{color:var(--oro-claro)}
+@media (max-width:900px){.tablero-banda .wrap{grid-template-columns:1fr}}
+/* en celular: solo el nombre de la zona, con letras más grandes */
+@media (max-width:560px){.fila{grid-template-columns:minmax(0,1fr)}.fila > :nth-child(2){display:none}.flaps span{max-width:none;font-size:clamp(11px,3.6vw,15px)}}
+
+/* servicios */
+.servicios{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:start}
+.lista-serv{display:grid}
+.serv{display:grid;grid-template-columns:52px minmax(0,1fr);gap:16px;padding:26px 0;border-top:1px solid var(--linea-p)}
+.serv:last-child{border-bottom:1px solid var(--linea-p)}
+.serv svg{width:40px;height:40px;stroke:var(--oro-tinta);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.serv h3{font-family:var(--display);font-size:30px;font-weight:600;letter-spacing:-.02em}
+.serv p{color:var(--gris);margin-top:6px;max-width:46ch}
+.fotos-serv{position:sticky;top:110px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fotos-serv img{width:100%;border-radius:var(--r);object-fit:cover}
+.fotos-serv .alta{grid-row:span 2;height:100%;min-height:0}
+.fotos-serv .baja{aspect-ratio:1}
+.fotos-serv figcaption{grid-column:1/-1;font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--gris);text-transform:uppercase}
+.informe{display:flex;gap:18px;align-items:flex-start;margin-top:32px;padding:22px 24px;border-radius:var(--r);background:var(--tinta);color:var(--crema)}
+.informe svg{width:28px;height:28px;flex:none;stroke:var(--oro);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+.informe p{color:var(--niebla);font-size:16px}.informe b{color:var(--crema)}
+@media (max-width:900px){.servicios{grid-template-columns:1fr}.fotos-serv{position:static;order:-1}}
+
+/* planes */
+.grupo{display:grid;gap:22px}
+.grupo + .grupo{margin-top:56px}
+.grupo-cab{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;padding-bottom:14px;border-bottom:1px solid var(--linea-n)}
+.grupo-cab h3{font-family:var(--display);font-size:30px;font-weight:400;font-style:italic;color:var(--crema)}
+.grupo-cab p{color:var(--niebla);font-size:15px}
+.pasajes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.pasaje{display:grid;grid-template-columns:minmax(0,1fr) auto;color:var(--tinta);filter:drop-shadow(0 18px 30px rgb(0 0 0 / .3));transition:transform .4s var(--ease)}
+.pasaje:hover{transform:translateY(-4px) rotate(-.4deg)}
+.p-cuerpo{background:var(--papel-2);border-radius:20px 0 0 20px;padding:24px 24px 22px;display:grid;gap:14px;align-content:start;min-width:0}
+.p-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.p-cod{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.2em;color:var(--oro-tinta)}
+.p-sello{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.16em;background:var(--tinta);color:var(--oro-claro);border-radius:6px;padding:4px 8px}
+.p-cuerpo h4{font-family:var(--display);font-size:clamp(34px,3.6vw,44px);font-weight:600;letter-spacing:-.03em;line-height:1}
+.p-cuerpo .que{color:var(--gris);font-size:15px;margin-top:-6px}
+.incluye{list-style:none;display:grid;gap:7px;font-size:14.5px;font-weight:500}
+.incluye li{display:flex;gap:10px;align-items:flex-start}
+.incluye li::before{content:"";flex:none;width:7px;height:7px;margin-top:8px;border-radius:50%;background:var(--oro)}
+.incluye.dos{grid-template-columns:1fr 1fr;column-gap:16px}
+.suma{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px;color:var(--gris);padding-top:12px;border-top:1px dashed var(--linea-p)}
+.suma b{font-weight:700;color:var(--tinta)}
+.extra{display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:13.5px;font-weight:700;color:var(--tinta);background:transparent;border:1.5px solid var(--linea-p);border-radius:999px;padding:5px 13px 5px 10px;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.extra::before{content:"+";font-size:16px;line-height:1;color:var(--oro-tinta)}
+.extra:hover{border-color:var(--oro)}
+.extra[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--crema)}
+.extra[aria-pressed="true"]::before{content:"✓";font-size:13px;color:var(--oro-claro)}
+.extra-nota{margin-top:8px;font-size:12.5px;font-weight:700;line-height:1.35;color:var(--oro-tinta)}
+.talon{position:relative;width:clamp(178px,17vw,206px);background-color:var(--papel-2);border-radius:0 20px 20px 0;padding:24px 20px 22px 24px;display:flex;flex-direction:column;justify-content:space-between;gap:18px;
+  background-image:radial-gradient(circle at 0 0,var(--noche) 11px,transparent 11.5px),radial-gradient(circle at 0 100%,var(--noche) 11px,transparent 11.5px)}
+.talon::before{content:"";position:absolute;left:0;top:18px;bottom:18px;border-left:2px dashed rgb(19 33 61 / .22)}
+.precio{white-space:nowrap;font-family:var(--display);font-size:clamp(28px,2.6vw,36px);font-weight:600;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;margin-top:6px}
+.precio sup{font-size:.5em;vertical-align:.7em;margin-right:2px}
+.por{font-weight:700;font-size:14px;margin-top:6px}
+.talon a{display:inline-flex;justify-content:center;font-weight:800;font-size:14px;text-decoration:none;background:var(--tinta);color:var(--crema);border-radius:999px;padding:11px 14px;transition:background .2s,color .2s}
+.talon a:hover{background:var(--oro);color:var(--noche)}
+.pasaje.destacado .p-cuerpo,.pasaje.destacado .talon{background-color:#fbf0d2}
+.frecuencia{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:start;margin-top:40px;padding:24px 26px;border:1px solid var(--linea-n);border-radius:var(--r);background:var(--noche-2)}
+.frecuencia svg{width:30px;height:30px;stroke:var(--oro);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.frecuencia p{color:var(--niebla)}.frecuencia b{color:var(--crema)}
+@media (max-width:980px){.pasajes{grid-template-columns:1fr}}
+@media (max-width:560px){
+  .pasaje{grid-template-columns:1fr}
+  .p-cuerpo{border-radius:20px 20px 0 0}
+  .talon{width:auto;border-radius:0 0 20px 20px;flex-direction:row;align-items:center;padding:22px 22px 20px;
+    background-image:radial-gradient(circle at 0 0,var(--noche) 11px,transparent 11.5px),radial-gradient(circle at 100% 0,var(--noche) 11px,transparent 11.5px)}
+  .talon::before{left:18px;right:18px;top:0;bottom:auto;border-left:0;border-top:2px dashed rgb(19 33 61 / .22)}
+  .incluye.dos{grid-template-columns:1fr}
+}
+
+/* turno minero */
+.minero{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--noche) 0,#122650 100%)}
+.minero canvas{position:absolute;left:0;right:0;bottom:0;width:100%;height:240px;pointer-events:none}
+.minero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(36px,6vw,72px);align-items:center}
+.minero h2{margin-top:14px}
+.minero p.bajada{margin:22px 0 30px}
+.cal{background:var(--papel-2);color:var(--tinta);border-radius:var(--r);padding:clamp(18px,3vw,28px);box-shadow:0 30px 60px rgb(0 0 0 / .4);min-width:0}
+.cal-cab{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.cal-cab small{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--oro-tinta);font-weight:600}
+.turnos{display:flex;gap:6px;flex-wrap:wrap}
+.turnos button{font-family:var(--mono);font-weight:600;font-size:13px;border:1.5px solid var(--linea-p);background:transparent;color:var(--tinta);border-radius:999px;padding:6px 12px;cursor:pointer;transition:background .2s,border-color .2s}
+.turnos button[aria-pressed="true"]{background:var(--tinta);color:var(--oro-claro);border-color:var(--tinta)}
+.dias{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin:18px 0}
+.dias span{aspect-ratio:1;border-radius:10px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:clamp(12px,1.4vw,15px);font-variant-numeric:tabular-nums;animation:aparece .5s var(--ease) both}
+@keyframes aparece{from{transform:scale(.6);opacity:.2}}
+.d-m{background:var(--tinta);color:var(--oro-claro)}.d-v{background:var(--oro);color:var(--noche)}.d-c{background:#ece2cc;color:#8a7650}
+.ley{display:grid;gap:8px;font-size:14.5px}
+.ley div{display:flex;gap:10px;align-items:center}
+.ley i{width:14px;height:14px;border-radius:4px;flex:none}
+@media (max-width:900px){.minero .wrap{grid-template-columns:1fr}}
+
+/* cómo trabajamos */
+.pasos{list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));counter-reset:p}
+.pasos li{counter-increment:p;padding:28px 22px 4px 0;border-top:2px solid var(--tinta);position:relative}
+.pasos li::before{content:counter(p);display:block;font-family:var(--display);font-style:italic;font-size:56px;line-height:1;color:var(--oro-tinta);margin-bottom:18px}
+.pasos li::after{content:"";position:absolute;top:-7px;left:0;width:12px;height:12px;border-radius:50%;background:var(--oro);box-shadow:0 0 0 4px var(--papel)}
+.pasos h3{font-size:19px;font-weight:800;margin-bottom:6px}
+.pasos p{color:var(--gris);font-size:15.5px}
+@media (max-width:980px){.pasos{grid-template-columns:1fr 1fr;row-gap:28px}}
+@media (max-width:560px){.pasos{grid-template-columns:1fr}}
+
+/* confianza */
+.conf{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:28px;align-items:start;margin-top:clamp(64px,8vw,104px)}
+.checks{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.checks li{background:var(--papel-2);border:1px solid var(--linea-p);border-radius:18px;padding:20px}
+.checks b{display:block;font-size:17px;margin-bottom:4px}
+.checks span{color:var(--gris);font-size:15px}
+.limites{border-radius:var(--r);padding:26px;background:var(--tinta);color:var(--crema)}
+.limites h3{font-family:var(--display);font-size:26px;font-weight:400;font-style:italic;color:var(--oro-claro);margin-bottom:10px}
+.limites p{color:var(--niebla);font-size:15.5px}
+@media (max-width:900px){.conf{grid-template-columns:1fr}}
+@media (max-width:560px){.checks{grid-template-columns:1fr}}
+
+/* preguntas */
+.sin-arriba{padding-top:0}
+.preguntas{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,64px);align-items:start}
+.preguntas .cabeza{margin:0}
+.faq{display:grid}
+.faq details{border-top:1px solid var(--linea-p);padding:20px 0}
+.faq details:last-child{border-bottom:1px solid var(--linea-p)}
+.faq summary{cursor:pointer;font-weight:700;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--display);font-size:28px;line-height:.8;color:var(--oro-tinta);transition:transform .3s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{color:var(--gris);margin-top:10px;max-width:60ch}
+@media (max-width:900px){.preguntas{grid-template-columns:1fr}}
+
+/* cierre */
+.cierre{text-align:center;position:relative;overflow:hidden}
+.cierre .wrap{display:grid;justify-items:center;gap:22px}
+.cierre img{width:min(220px,56%)}
+.cierre h2{font-size:clamp(44px,7vw,92px);letter-spacing:-.04em}
+.cierre p{color:var(--niebla);max-width:46ch}
+.numero{font-weight:600;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px;font-family:var(--mono);font-size:15px;color:var(--niebla)}
+.numero b{color:var(--crema);font-weight:600;user-select:all}
+.numero button{font-family:var(--texto);font-weight:700;font-size:13px;border:1px solid var(--linea-n);background:transparent;color:var(--crema);border-radius:999px;padding:6px 12px;cursor:pointer}
+.numero button:hover{border-color:var(--oro);color:var(--oro-claro)}
+footer{border-top:1px solid var(--linea-n);color:#8792ab;font-size:14px;padding-block:26px calc(26px + env(safe-area-inset-bottom,0px))}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap}
+.credito{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#8792ab}
+.credito img{height:16px;width:auto;opacity:.85}
+@media (max-width:700px){footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}footer .wrap{flex-direction:column;align-items:flex-start}}
+
+/* la app de informes */
+.app-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:clamp(40px,6vw,88px);align-items:center}
+.app-puntos{list-style:none;display:grid;gap:18px;margin-top:32px}
+.app-puntos li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:16px;align-items:start}
+.app-puntos svg{width:44px;height:44px;padding:10px;border-radius:12px;background:var(--tinta);stroke:var(--oro-claro);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.app-puntos b{display:block;font-size:17px}
+.app-puntos span{color:var(--gris);font-size:15.5px}
+.tel{justify-self:center;width:min(320px,100%);border-radius:44px;padding:12px;background:var(--tinta);box-shadow:0 40px 70px -30px rgb(19 33 61 / .55);transform:rotate(2deg)}
+.tel-pantalla{border-radius:34px;overflow:hidden;background:var(--papel);padding:18px 16px 22px;display:grid;gap:14px;font-size:13px;color:var(--tinta)}
+.tel-isla{justify-self:center;width:84px;height:22px;border-radius:999px;background:var(--tinta);margin-bottom:2px}
+.inf-top{display:flex;align-items:center;gap:10px}
+.inf-top img{width:34px;height:34px;border-radius:9px;background:var(--papel-2);padding:2px}
+.inf-top b{display:block;font-size:15px;line-height:1.1}
+.inf-top small{color:var(--gris);font-size:11.5px}
+.inf-estado{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding:14px;border-radius:16px;background:#dcebe1}
+.inf-estado svg{width:26px;height:26px;fill:#2f6b48}
+.inf-estado b{display:block;font-size:15px;line-height:1.2}
+.inf-estado span{display:block;color:#3c4a42;font-size:12px;margin-top:3px}
+.inf-estado i{display:block;font-size:12.5px;margin-top:8px;color:var(--tinta)}
+.inf-tit{font-weight:700;font-size:12.5px}
+.inf-fotos{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.inf-fotos img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:10px}
+.inf-fotos img:first-child{grid-column:1/-1;aspect-ratio:16/10}
+.inf-mes{color:var(--gris);font-size:12px}
+.inf-mes b{color:var(--tinta)}
+.app-nota{margin-top:14px;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
+@media (max-width:900px){.app-grid{grid-template-columns:1fr}.tel{transform:none}}
+
+.wa-flot{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:30;width:58px;height:58px;border-radius:50%;background:var(--oro);display:grid;place-items:center;box-shadow:0 12px 30px rgb(0 0 0 / .4);transition:transform .3s var(--ease)}
+.wa-flot:hover{transform:scale(1.07)}
+.wa-flot svg{width:28px;height:28px;stroke:var(--noche);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+</style>
+
+<header class="barra">
+  <div class="wrap">
+    <a class="marca" href="#inicio" aria-label="Althea, ir al inicio">
+      <img src="img/althea-icono.webp" alt="" width="40" height="40" fetchpriority="high">
+      <span><b>ALTHEA</b><small>HOGAR &amp; MASCOTAS</small></span>
+    </a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#servicios">Servicios</a>
+      <a href="#planes">Planes y precios</a>
+      <a href="#turno-minero">Turno Minero</a>
+      <a href="#app">La app</a>
+      <a href="#como">Cómo trabajamos</a>
+      <a href="#preguntas">Preguntas</a>
+    </nav>
+    <a class="btn btn-oro js-wa" href="#contacto" data-msg="Hola! Quiero consultar por el servicio de Althea.">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+      <span>Consultar</span>
+    </a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <div class="hero-texto">
+      <span class="etiqueta">Cuidado de casas y mascotas · Salta</span>
+      <h1><span>Viajá</span><span>tranquilo.</span><em>Cuidamos lo que más querés.</em></h1>
+      <p class="bajada">Mientras viajás o trabajás, vamos a tu casa, atendemos a tus mascotas en su lugar de siempre y te mandamos fotos de cada visita por WhatsApp.</p>
+      <div class="acciones">
+        <a class="btn btn-oro js-wa" href="#contacto" data-msg="Hola! Quiero consultar por el servicio de Althea.">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+          Escribinos por WhatsApp
+        </a>
+        <a class="btn btn-linea" href="#planes">Ver planes y precios</a>
+      </div>
+    </div>
+
+    <div class="escena">
+      <div class="foto"><img src="img/perro-porche-1000.webp" width="860" height="946" fetchpriority="high" alt="Un perro duerme al sol en el sillón del porche de su casa"></div>
+      <div class="pase" role="img" aria-label="Pase de tranquilidad: desde Salta hacia donde quieras; tu casa queda con Althea">
+        <div class="pase-cuerpo">
+          <div class="pase-banda"><b>PASE DE TRANQUILIDAD</b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></div>
+          <div class="ruta">
+            <div><span class="chico">DESDE</span><strong>SLA</strong></div>
+            <i></i>
+            <div class="fin"><span class="chico">HACIA</span><strong>donde quieras</strong></div>
+          </div>
+          <div class="pase-campos">
+            <div><span class="chico">PASAJERO</span>Vos y tu familia</div>
+            <div><span class="chico">EQUIPAJE</span>Liviano</div>
+            <div class="ancho"><span class="chico">TU CASA QUEDA CON</span><span class="al">Althea</span></div>
+          </div>
+        </div>
+        <div class="perfo"><i></i></div>
+        <div class="pase-pie">
+          <div><span class="chico">INCLUYE</span>Casa · Mascotas · Jardín · Pileta</div>
+          <div class="barras" aria-hidden="true"><span style="width:2px"></span><span style="width:5px"></span><span style="width:2px"></span><span style="width:4px"></span><span style="width:1px"></span><span style="width:6px"></span><span style="width:2px"></span><span style="width:3px"></span><span style="width:1px"></span><span style="width:4px"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tablero-banda" id="zonas" aria-labelledby="t-zonas">
+  <div class="wrap">
+    <div>
+      <span class="etiqueta">Dónde estamos</span>
+      <h2 id="t-zonas">Salta <em>y alrededores.</em></h2>
+      <p>Agrupamos las visitas por zona para llegar siempre a horario. Si vivís cerca de estas zonas, consultanos.</p>
+    </div>
+    <div class="tablero" id="tablero" role="img" aria-label="Zonas que cubrimos: Salta capital, Vaqueros, San Lorenzo, Cerrillos y San Luis"></div>
+  </div>
+</section>
+
+<section class="papel banda" id="servicios">
+  <div class="wrap">
+    <div class="cabeza">
+      <span class="etiqueta">Qué hacemos</span>
+      <h2>Tu casa no queda sola, <em>aunque vos no estés.</em></h2>
+    </div>
+    <div class="servicios">
+      <div>
+        <div class="lista-serv">
+          <article class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg><div><h3>Tu casa</h3><p>Abrimos, ventilamos, revisamos puertas, ventanas y accesos, y dejamos todo como lo encontramos.</p></div></article>
+          <article class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="10" r="2"/><circle cx="9.5" cy="5.5" r="2"/><circle cx="14.5" cy="5.5" r="2"/><circle cx="19" cy="10" r="2"/><path d="M12 12c-3 0-6 4-6 6.5S8 21 12 19.5c4 1.5 6 1.5 6-1S15 12 12 12z"/></svg><div><h3>Mascotas</h3><p>Comida, agua limpia, paseos y compañía. Perros, gatos o la mascota que tengas, en su casa y con su rutina.</p></div></article>
+          <article class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 15c2 0 2-1.5 4-1.5S8 15 10 15s2-1.5 4-1.5S16 15 18 15s2-1.5 4-1.5"/><path d="M2 20c2 0 2-1.5 4-1.5S8 20 10 20s2-1.5 4-1.5S16 20 18 20s2-1.5 4-1.5"/><path d="M8 12V5a2 2 0 0 1 4 0M14 12V5a2 2 0 0 1 4 0"/></svg><div><h3>Pileta</h3><p>Si tenés piletero, lo recibimos. Si no, controlamos el agua y la limpieza.</p></div></article>
+          <article class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22V11"/><path d="M12 11C12 6 8 3 4 3c0 5 3 8 8 8z"/><path d="M12 14c0-4 3-7 8-7 0 5-3 7-8 7z"/></svg><div><h3>Jardín</h3><p>Si tenés jardinero, lo recibimos. Si no, nos ocupamos del riego y las plantas.</p></div></article>
+        </div>
+        <div class="informe">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg>
+          <p><b>Fotos de cada visita por WhatsApp.</b> Ves cómo están tu casa y tus mascotas sin tener que preguntar, y tenés un enlace privado con todo el historial.</p>
+        </div>
+      </div>
+      <figure class="fotos-serv">
+        <img class="alta" src="img/perro-gato-1000.webp" alt="Un perro y un gato blancos en la escalera de su casa" loading="lazy">
+        <img class="baja" src="img/pileta-villa-1000.webp" alt="Pileta de una casa con jardín" loading="lazy">
+        <img class="baja" src="img/llaves-1000.webp" alt="Llaves de una casa" loading="lazy">
+        <figcaption>Cada mascota, en su lugar de siempre</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="banda" id="planes">
+  <div class="wrap">
+    <div class="cabeza">
+      <span class="etiqueta">Planes y precios</span>
+      <h2>Elegí tu pasaje. <em>Nosotros nos quedamos.</em></h2>
+      <p class="bajada">Pagás por visita o por toda la estadía. Si tu casa necesita algo distinto, lo armamos con vos.</p>
+    </div>
+
+    <div class="grupo">
+      <div class="grupo-cab"><h3>Por visita</h3><p>Para salidas cortas o cuando lo necesites.</p></div>
+      <div class="pasajes" id="por-visita"></div>
+    </div>
+    <div class="grupo">
+      <div class="grupo-cab"><h3>Por estadía, todo incluido</h3><p>Casa, mascotas, pileta y jardín durante todo tu viaje.</p></div>
+      <div class="pasajes" id="por-estadia"></div>
+    </div>
+
+    <div class="frecuencia">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+      <p><b>¿Cada cuánto vamos?</b> Si hay mascotas, todos los días: la comida, el agua, el juego y el paseo no pueden esperar. Si no hay mascotas, día por medio o cada dos días. Siempre según lo que necesites.</p>
+    </div>
+  </div>
+</section>
+
+<section class="minero banda" id="turno-minero">
+  <canvas id="cerros" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <span class="etiqueta">Plan Turno Minero</span>
+      <h2>Vos en la Puna. <em>Tu casa, en buenas manos.</em></h2>
+      <p class="bajada">Organizamos las visitas según tu rotación. Mientras trabajás arriba, cuidamos todo abajo, y el día antes de que bajes te dejamos la casa lista para tu vuelta.</p>
+      <a class="btn btn-oro js-wa" href="#contacto" data-msg="Hola! Quiero consultar por el Plan Turno Minero. Mi turno es: ">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+        Contanos tu turno
+      </a>
+    </div>
+    <div class="cal">
+      <div class="cal-cab">
+        <small id="cal-titulo">TURNO 7×7 · 14 DÍAS</small>
+        <div class="turnos" role="group" aria-label="Elegí tu rotación">
+          <button type="button" id="t-7x7" data-t="7,7" aria-pressed="true">7×7</button>
+          <button type="button" id="t-14x14" data-t="14,14" aria-pressed="false">14×14</button>
+          <button type="button" id="t-4x3" data-t="4,3" aria-pressed="false">4×3</button>
+        </div>
+      </div>
+      <div class="dias" id="dias"></div>
+      <div class="ley">
+        <div><i style="background:var(--tinta)"></i><span><b>Vos en la mina:</b> Althea en tu casa</span></div>
+        <div><i style="background:var(--oro)"></i><span><b>El día antes de bajar:</b> casa lista para tu vuelta</span></div>
+        <div><i style="background:#ece2cc"></i><span><b>Vos en casa:</b> descansá tranquilo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="papel banda" id="app">
+  <div class="wrap app-grid">
+    <div>
+      <div class="cabeza" style="margin:0">
+        <span class="etiqueta">Nuestra aplicación</span>
+        <h2>Cada visita, <em>en tu celular.</em></h2>
+        <p class="bajada">Contamos con una aplicación propia. Después de cada visita se carga el reporte con fotos, y vos lo ves desde un enlace privado, estés donde estés.</p>
+      </div>
+      <ul class="app-puntos">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg><div><b>Reporte con fotos de cada visita</b><span>Cómo están tu casa y tus mascotas, el mismo día.</span></div></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div><b>Enlace privado para cada cliente</b><span>Sin descargar nada ni crear un usuario. Lo ves solo vos.</span></div></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><div><b>Historial completo</b><span>Todas las visitas, con fecha, hora y novedades.</span></div></li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg><div><b>Aviso si algo necesita atención</b><span>Si encontramos una pérdida, una humedad o cualquier problema, lo ves primero.</span></div></li>
+      </ul>
+    </div>
+    <figure>
+      <div class="tel" role="img" aria-label="Ejemplo del informe que ve el cliente en su celular: Tu casa está en orden, con fotos de la última visita">
+        <div class="tel-pantalla">
+          <div class="tel-isla"></div>
+          <div class="inf-top"><img src="img/althea-icono.webp" alt="" width="34" height="34" loading="lazy"><span><b>Althea</b><small>Informe de cuidado de tu casa</small></span></div>
+          <div class="inf-estado">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.2-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4z"/></svg>
+            <div><b>Tu casa está en orden</b><span>Última visita: hoy a las 10:05</span><i>“Toto y Luna comieron, tomaron agua y salieron a pasear.”</i></div>
+          </div>
+          <span class="inf-tit">Fotos de la última visita</span>
+          <div class="inf-fotos">
+            <img src="img/informe-perro.webp" alt="" width="500" height="312" loading="lazy">
+            <img src="img/informe-gato.webp" alt="" width="260" height="260" loading="lazy">
+            <img src="img/informe-riego.webp" alt="" width="260" height="260" loading="lazy">
+          </div>
+          <p class="inf-mes">En los últimos 30 días: <b>12 visitas</b>, sin novedades.</p>
+        </div>
+      </div>
+      <figcaption class="app-nota">Así ve el informe cada cliente (ejemplo)</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="papel banda sin-arriba" id="como">
+  <div class="wrap">
+    <div class="cabeza">
+      <span class="etiqueta">Cómo trabajamos</span>
+      <h2>Todo acordado y por escrito, <em>de principio a fin.</em></h2>
+    </div>
+    <ol class="pasos">
+      <li><h3>Consulta</h3><p>Nos contás dónde vivís, cuántos días te vas, qué mascotas tenés y qué necesitás.</p></li>
+      <li><h3>Relevamiento</h3><p>Conocemos la casa, armamos la ficha con contactos de emergencia y firmamos el acta de llaves.</p></li>
+      <li><h3>Visitas</h3><p>Vamos los días acordados, cuidamos a tus mascotas y revisamos la casa con una lista de control.</p></li>
+      <li><h3>Informe</h3><p>Después de cada visita te llegan fotos y novedades por WhatsApp.</p></li>
+      <li><h3>Cierre</h3><p>Cuando volvés, te damos el informe final y te devolvemos las llaves.</p></li>
+    </ol>
+
+    <div class="conf">
+      <ul class="checks">
+        <li><b>Acta de llaves</b><span>Las llaves se entregan y se devuelven con un acta firmada, y solo se usan en las visitas acordadas.</span></li>
+        <li><b>Lista de control</b><span>En cada visita revisamos siempre lo mismo y te contamos cualquier novedad.</span></li>
+        <li><b>Contactos de emergencia</b><span>Antes de empezar dejamos por escrito a quién llamar y qué hacer ante cualquier problema.</span></li>
+        <li><b>Tus datos, privados</b><span>Las fotos y los informes de tu casa los ves solo vos.</span></li>
+      </ul>
+      <aside class="limites">
+        <h3>Para que sepas</h3>
+        <p>Althea es un servicio de visitas programadas. No es vigilancia permanente, seguridad privada, atención veterinaria ni mantenimiento técnico. Si hace falta un profesional, te avisamos y lo coordinamos con vos.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="papel banda sin-arriba" id="preguntas">
+  <div class="wrap preguntas">
+    <div class="cabeza">
+      <span class="etiqueta">Preguntas frecuentes</span>
+      <h2>Lo que más <em>nos preguntan.</em></h2>
+    </div>
+    <div class="faq">
+      <details><summary>¿Cada cuánto van a mi casa?</summary><p>Si hay mascotas, todos los días. Si no hay, día por medio o cada dos días. Lo ajustamos según lo que necesites.</p></details>
+      <details><summary>¿Cuánto dura cada visita?</summary><p>Entre 45 minutos y una hora, según las mascotas y las tareas que acordemos.</p></details>
+      <details><summary>¿Qué incluyen los planes Semanal y Quincenal?</summary><p>Todo: alimentación de perros y gatos, agua y limpieza de recipientes, paseos y compañía, cuidado y control de la casa, accesos, ventilación, pileta, jardín y reporte con fotos.</p></details>
+      <details><summary>¿Quién pone la comida de las mascotas y los productos?</summary><p>Los alimentos, insumos y productos los deja el dueño de casa. Si te falta algo, te avisamos.</p></details>
+      <details><summary>¿Qué pasa si surge un problema mientras no estoy?</summary><p>Te avisamos enseguida y seguimos el protocolo que dejamos por escrito: contactos de emergencia, veterinario y los profesionales que vos autorices.</p></details>
+      <details><summary>¿Con cuánta anticipación tengo que reservar?</summary><p>Cuanto antes, mejor, sobre todo para vacaciones y fines de semana largos. Así conocemos tu casa antes del viaje.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="cierre banda" id="contacto">
+  <div class="wrap">
+    <img src="img/althea-logo.webp" alt="Althea · Hogar &amp; Mascotas · Viajá tranquilo" loading="lazy">
+    <h2>¿Te vas de viaje? <em>Hablemos.</em></h2>
+    <p>Contanos cuántos días te vas y qué necesitás. Te respondemos por WhatsApp.</p>
+    <a class="btn btn-oro js-wa" href="#contacto" data-msg="Hola! Quiero consultar por el servicio de Althea.">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+      Escribinos por WhatsApp
+    </a>
+    <div class="numero">WhatsApp <b id="numero">+54 9 11 4927-8087</b><button type="button" id="copiar">Copiar número</button></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Althea · Hogar &amp; Mascotas</span>
+    <span>Salta y alrededores · Viajá tranquilo.</span>
+    <span class="credito">Plataforma realizada por <img src="img/lambda-lab-norte.webp" alt="Lambda Lab Norte" width="131" height="16" loading="lazy"></span>
+  </div>
+</footer>
+
+<a class="wa-flot js-wa" href="#contacto" data-msg="Hola! Quiero consultar por el servicio de Althea." aria-label="Escribir a Althea por WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.4A8.4 8.4 0 1 1 21 11.5z"/></svg>
+</a>
+
+<script>
+/* ===== EDITÁ ACÁ ===== */
+// Número de WhatsApp: 549 + código de área sin 0 + número sin 15.
+const WHATSAPP = '5491149278087'
+
+// Planes y precios. Para cambiar un precio, editá "precio". Para sacar un plan, borrá su bloque.
+const PLANES_POR_VISITA = [
+  { codigo: 'ESN', nombre: 'Esencial', que: 'Supervisión de tu hogar', precio: '12.000', por: 'por visita',
+    incluye: ['Revisión general de la vivienda', 'Control de accesos', 'Ventilación de ambientes', 'Reporte con fotos de cada visita'], suma: true },
+  { codigo: 'MSC', nombre: 'Mascotas', que: 'Cuidado de tu hogar y tus mascotas', precio: '18.000', por: 'por día',
+    incluye: ['Alimentación de perros y gatos', 'Cambio de agua y limpieza de recipientes', 'Paseos y tiempo de compañía', 'Control básico de su bienestar', 'Reporte con fotos de cada visita'], suma: true },
+]
+const TODO_INCLUIDO = ['Alimentación de perros y gatos', 'Agua y limpieza de recipientes', 'Paseos y compañía', 'Cuidado y control de la casa', 'Control de accesos', 'Ventilación de ambientes', 'Control de pileta', 'Control de jardín', 'Reporte con fotos']
+const PLANES_POR_ESTADIA = [
+  { codigo: 'SEM', nombre: 'Semanal', que: 'Cuidado completo, visitas todos los días durante 7 días', precio: '170.000', por: 'por 7 días', incluye: TODO_INCLUIDO },
+  { codigo: 'QNC', nombre: 'Quincenal', que: 'Cuidado completo, visitas todos los días durante 15 días', precio: '190.000', por: 'por 15 días', incluye: TODO_INCLUIDO, destacado: true },
+]
+// Servicios que se pueden sumar a los planes por visita. Su precio se consulta por WhatsApp.
+const EXTRAS = ['Pileta', 'Jardín']
+/* ===== FIN ===== */
+
+const enlaceWA = (msg) => 'https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(msg)
+
+function pasaje(p) {
+  const lista = p.incluye.map((i) => `<li>${i}</li>`).join('')
+  return `
+  <article class="pasaje${p.destacado ? ' destacado' : ''}">
+    <div class="p-cuerpo">
+      <div class="p-top"><span class="p-cod">SLA · ${p.codigo}</span>${p.sello ? `<span class="p-sello">${p.sello}</span>` : ''}</div>
+      <h4>${p.nombre}</h4>
+      <p class="que">${p.que}</p>
+      <ul class="incluye${p.incluye.length > 6 ? ' dos' : ''}">${lista}</ul>
+      ${p.suma ? `<div class="suma"><b>Tocá para sumar:</b>${EXTRAS.map((x) => `<button type="button" class="extra" aria-pressed="false" data-extra="${x}">${x}</button>`).join('')}</div>` : ''}
+    </div>
+    <div class="talon">
+      <div><span class="chico">PRECIO</span><div class="precio"><sup>$</sup>${p.precio}</div><div class="por">${p.por}</div><div class="extra-nota" hidden></div></div>
+      <a class="js-wa reservar" href="#contacto" data-plan="${p.nombre}" data-msg="Hola! Quiero consultar por el Plan ${p.nombre}.">Reservar</a>
+    </div>
+  </article>`
+}
+document.getElementById('por-visita').innerHTML = PLANES_POR_VISITA.map(pasaje).join('')
+document.getElementById('por-estadia').innerHTML = PLANES_POR_ESTADIA.map(pasaje).join('')
+
+// Sumar pileta o jardín: se marca, se avisa en el talón y se agrega al mensaje de reserva
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('.extra')
+  if (!b) return
+  b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true'))
+  const pasaje = b.closest('.pasaje')
+  const elegidos = [...pasaje.querySelectorAll('.extra[aria-pressed="true"]')].map((x) => x.dataset.extra.toLowerCase())
+  const lista = elegidos.join(' y ')
+  const nota = pasaje.querySelector('.extra-nota')
+  nota.hidden = !elegidos.length
+  nota.textContent = elegidos.length ? `+ ${lista.charAt(0).toUpperCase() + lista.slice(1)}: a consultar` : ''
+  const a = pasaje.querySelector('.reservar')
+  a.href = enlaceWA(`Hola! Quiero consultar por el Plan ${a.dataset.plan}${elegidos.length ? `, sumando ${lista}` : ''}.`)
+})
+
+document.querySelectorAll('.js-wa').forEach((a) => {
+  a.href = enlaceWA(a.dataset.msg || 'Hola!')
+  a.target = '_blank'
+  a.rel = 'noopener'
+})
+
+// Copiar el número
+const btnCopiar = document.getElementById('copiar')
+btnCopiar.addEventListener('click', () => {
+  const nodo = document.getElementById('numero')
+  const listo = () => { btnCopiar.textContent = 'Copiado'; setTimeout(() => { btnCopiar.textContent = 'Copiar número' }, 2000) }
+  const seleccionar = () => { const r = document.createRange(); r.selectNodeContents(nodo); const s = getSelection(); s.removeAllRanges(); s.addRange(r) }
+  try { navigator.clipboard.writeText(nodo.textContent).then(listo, seleccionar) } catch { seleccionar() }
+})
+
+// Tablero de salidas: las letras giran y se acomodan
+const ZONAS = ['SALTA CAPITAL', 'VAQUEROS', 'SAN LORENZO', 'CERRILLOS', 'SAN LUIS']
+const tablero = document.getElementById('tablero')
+const flaps = (txt, n, ok) => `<div class="flaps${ok ? ' ok' : ''}">${txt.padEnd(n).split('').map((c) => `<span data-c="${c}">${c === ' ' ? '&nbsp;' : c}</span>`).join('')}</div>`
+tablero.innerHTML = '<div class="fila titulo"><span>DESTINO</span><span>ESTADO</span></div>' +
+  ZONAS.map((z) => `<div class="fila">${flaps(z, 13)}${flaps('CUBIERTA', 8, true)}</div>`).join('')
+function girar() {
+  const LETRAS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  tablero.querySelectorAll('.flaps span').forEach((el, i) => {
+    const fin = el.dataset.c
+    if (fin === ' ') return
+    let vueltas = 6 + (i % 13)
+    const t = setInterval(() => {
+      if (--vueltas <= 0) { el.textContent = fin; clearInterval(t); return }
+      el.textContent = LETRAS[Math.floor(Math.random() * LETRAS.length)]
+    }, 55)
+  })
+}
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver((e) => { if (e[0].isIntersecting) { girar(); io.disconnect() } }, { threshold: .4 })
+  io.observe(tablero)
+}
+
+// Calendario del turno minero
+const dias = document.getElementById('dias')
+function turno(arriba, abajo) {
+  let html = ''
+  for (let d = 1; d <= arriba + abajo; d++) {
+    const cls = d < arriba ? 'd-m' : d === arriba ? 'd-v' : 'd-c'
+    html += `<span class="${cls}" style="animation-delay:${d * 18}ms">${d}</span>`
+  }
+  dias.innerHTML = html
+  document.getElementById('cal-titulo').textContent = `TURNO ${arriba}×${abajo} · ${arriba + abajo} DÍAS`
+}
+document.querySelectorAll('.turnos button').forEach((b) => b.addEventListener('click', () => {
+  document.querySelectorAll('.turnos button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)))
+  const [a, c] = b.dataset.t.split(',').map(Number)
+  turno(a, c)
+}))
+turno(7, 7)
+
+// Cerros de la Puna, dibujados
+const cv = document.getElementById('cerros')
+function cerros() {
+  const w = cv.clientWidth, h = cv.clientHeight, dpr = Math.min(devicePixelRatio || 1, 2)
+  if (!w || !h) return
+  cv.width = w * dpr; cv.height = h * dpr
+  const g = cv.getContext('2d'); g.scale(dpr, dpr)
+  ;[['#1b3466', .55, .35, 7], ['#16295a', .8, .55, 11], ['#0f1f45', 1, .75, 17]].forEach(([color, alfa, base, s]) => {
+    g.globalAlpha = alfa; g.fillStyle = color; g.beginPath(); g.moveTo(0, h)
+    for (let x = 0; x <= w + 6; x += 6) {
+      const y = h * base - Math.sin(x / (90 + s * 4) + s) * h * .16 - Math.sin(x / (37 + s) + s * 2) * h * .06 - Math.abs(Math.sin(x / (160 + s * 9))) * h * .12
+      g.lineTo(x, y)
+    }
+    g.lineTo(w, h); g.closePath(); g.fill()
+  })
+  g.globalAlpha = 1
+}
+cerros()
+addEventListener('resize', cerros)
+</script>

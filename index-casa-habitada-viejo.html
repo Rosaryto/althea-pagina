@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Casa Habitada · Cuidado de casas en Salta y alrededores</title>
+<meta name="description" content="Cuido tu casa mientras no estás: pileta, parque, mascotas y arreglos. Informe con fotos después de cada visita. Salta capital, San Lorenzo, Vaqueros, La Caldera, La Calderilla, Cerrillos y alrededores.">
+<meta name="theme-color" content="#f2f4f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0d1310" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="Casa Habitada · Cuidado de casas en Salta y alrededores">
+<meta property="og:description" content="No dejo tu casa vacía. La cuido por vos.">
+<meta property="og:image" content="img/galeria-1200.webp">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="preload" href="fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/galeria-1200.webp" imagesrcset="img/galeria-700.webp 700w, img/galeria-1200.webp 1200w" imagesizes="(max-width: 900px) 100vw, 46vw">
+<style>
+  /*
+    Sistema visual
+    Paleta "bosque": verde profundo, blanco frío y un solo acento ámbar.
+    Radios: botones en píldora, imágenes y bloques 24px, elementos chicos 12px.
+    Tema: sigue al sistema (claro u oscuro).
+  */
+  @font-face { font-family: "Geist"; src: url("fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: "Geist Mono"; src: url("fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
+  :root {
+    --bg: #f2f4f1;
+    --surface: #fbfcfa;
+    --surface-2: #e7ebe6;
+    --line: #d6ddd5;
+    --ink: #101713;
+    --muted: #535f58;
+    --primary: #1b3a2a;
+    --primary-hover: #25503a;
+    --on-primary: #f2f4f1;
+    --accent: #d9950f;
+    --accent-soft: #f8e9c6;
+    --accent-ink: #6f4800;
+    --shadow-lg: 0 40px 80px -30px rgb(27 58 42 / .45), 0 12px 30px -12px rgb(27 58 42 / .25);
+    --r-lg: 24px;
+    --r-sm: 12px;
+    --ease: cubic-bezier(.16, 1, .3, 1);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1310;
+      --surface: #131b16;
+      --surface-2: #19231d;
+      --line: #25322a;
+      --ink: #e7ece8;
+      --muted: #95a39a;
+      --primary: #cfe6d7;
+      --primary-hover: #e4f2e9;
+      --on-primary: #0d1310;
+      --accent: #f0b43c;
+      --accent-soft: #33270c;
+      --accent-ink: #f6cf7f;
+      --shadow-lg: 0 40px 80px -30px rgb(0 0 0 / .8), 0 12px 30px -12px rgb(0 0 0 / .6);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "Geist", system-ui, sans-serif;
+    background: var(--bg); color: var(--ink);
+    font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: clip;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+  svg { flex: none; }
+  h1, h2, h3 { font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; text-wrap: balance; }
+  p { text-wrap: pretty; }
+  .mono { font-family: "Geist Mono", ui-monospace, monospace; letter-spacing: -0.02em; }
+  .wrap { width: min(1240px, 100% - 32px); margin-inline: auto; }
+  .muted { color: var(--muted); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+  /* botones */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    height: 52px; padding: 0 24px; border-radius: 999px; border: 0; cursor: pointer;
+    font: inherit; font-weight: 600; font-size: 1rem; white-space: nowrap; text-decoration: none;
+    background: var(--primary); color: var(--on-primary);
+    transition: background .3s var(--ease), transform .2s var(--ease);
+  }
+  .btn:hover { background: var(--primary-hover); }
+  .btn:active { transform: scale(.98) translateY(1px); }
+  .btn svg { width: 20px; height: 20px; }
+  .btn.sec { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+  .btn.sec:hover { background: var(--surface-2); }
+  .btn.sec svg { transition: transform .3s var(--ease); }
+  .btn.sec:hover svg { transform: translateY(2px); }
+
+  /* navegación */
+  .nav { position: sticky; top: 0; z-index: 30; height: 68px; background: color-mix(in srgb, var(--bg) 84%, transparent); backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%); border-bottom: 1px solid transparent; transition: border-color .3s; }
+  .nav.con-borde { border-bottom-color: var(--line); }
+  .nav .wrap { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.025em; font-size: 1.08rem; text-decoration: none; }
+  .logo-icono { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--primary); color: var(--on-primary); }
+  .logo-icono svg { width: 19px; height: 19px; }
+  .nav-links { display: flex; align-items: center; gap: 32px; font-weight: 500; font-size: .95rem; }
+  .nav-links a:not(.btn) { text-decoration: none; color: var(--muted); transition: color .2s; }
+  .nav-links a:not(.btn):hover { color: var(--ink); }
+  .nav .btn { height: 42px; padding: 0 18px; font-size: .92rem; }
+  .nav .btn svg { width: 18px; height: 18px; }
+
+  /* hero */
+  .hero { display: grid; grid-template-columns: 1.08fr .92fr; gap: clamp(32px, 5vw, 80px); align-items: center; padding: clamp(24px, 5vh, 64px) 0 96px; min-height: min(calc(100dvh - 68px), 860px); }
+  .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: .88rem; font-weight: 500; color: var(--muted); margin-bottom: 24px; }
+  .eyebrow svg { width: 18px; height: 18px; color: var(--accent); }
+  .hero h1 { font-size: clamp(2.5rem, 4.1vw, 3.6rem); }
+  .hero h1 em { display: block; font-style: normal; color: var(--muted); }
+  .hero .sub { font-size: clamp(1.05rem, 1.4vw, 1.2rem); color: var(--muted); max-width: 40ch; margin: 24px 0 36px; }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+  .hero-visual { position: relative; padding: 0 0 48px 64px; }
+  .hero-foto { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; background: var(--surface-2); }
+  .hero-foto img { width: 100%; height: 100%; object-fit: cover; }
+  .telefono {
+    position: absolute; left: 0; bottom: 0; width: clamp(180px, 17vw, 236px);
+    border-radius: 34px; padding: 7px; background: #0b100d; box-shadow: var(--shadow-lg);
+  }
+  .telefono picture { display: block; }
+  .telefono img { border-radius: 28px; width: 100%; height: auto; aspect-ratio: 390 / 844; object-fit: cover; object-position: top; }
+  @media (prefers-color-scheme: dark) { .telefono { box-shadow: var(--shadow-lg), 0 0 0 1px #2a3730; } }
+
+  .hero .entra { opacity: 0; transform: translateY(18px); animation: entra .9s var(--ease) forwards; animation-delay: calc(var(--i, 0) * 90ms + 80ms); }
+  .hero-visual.entra { transform: translateY(28px) scale(.985); }
+  .telefono.entra { transform: translateY(40px); animation-delay: 520ms; }
+  @keyframes entra { to { opacity: 1; transform: none; } }
+
+  section { padding: clamp(72px, 11vw, 140px) 0; }
+  .titulo { font-size: clamp(2rem, 4vw, 3.3rem); max-width: 18ch; }
+  .bajada { color: var(--muted); font-size: 1.1rem; max-width: 52ch; margin-top: 18px; }
+
+  /* casa sola: titular fijo + riesgos */
+  .riesgos { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(40px, 7vw, 120px); align-items: start; }
+  .riesgos-titulo { position: sticky; top: 120px; }
+  .riesgos ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 44px 36px; }
+  .riesgos li svg { width: 30px; height: 30px; color: var(--primary); margin-bottom: 18px; }
+  .riesgos li h3 { font-size: 1.2rem; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .riesgos li p { color: var(--muted); font-size: .98rem; }
+
+  /* cómo funciona */
+  .como { background: var(--surface-2); border-radius: clamp(24px, 3vw, 40px); margin-inline: clamp(8px, 1.2vw, 16px); }
+  .como-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
+  .como .telefono { position: relative; width: min(300px, 100%); margin-inline: auto; }
+  .pasos { list-style: none; margin-top: 48px; }
+  .paso { display: grid; grid-template-columns: 52px 1fr; gap: 20px; padding: 28px 0; border-top: 1px solid var(--line); }
+  .paso:last-child { padding-bottom: 0; }
+  .paso-icono { width: 52px; height: 52px; border-radius: var(--r-sm); background: var(--surface); display: grid; place-items: center; }
+  .paso-icono svg { width: 24px; height: 24px; color: var(--primary); }
+  .paso h3 { font-size: 1.3rem; letter-spacing: -0.025em; margin-bottom: 6px; }
+  .paso p { color: var(--muted); }
+
+  /* bento: qué incluye */
+  .bento { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: 300px 300px 280px; gap: 14px; margin-top: 56px;
+    grid-template-areas: "a a b" "a a b" "c d d"; }
+  .celda { position: relative; border-radius: var(--r-lg); overflow: hidden; padding: 28px; display: flex; flex-direction: column; justify-content: flex-end; isolation: isolate; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .celda h3 { font-size: 1.45rem; letter-spacing: -0.03em; margin-bottom: 6px; }
+  .celda p { font-size: .98rem; max-width: 40ch; }
+  .celda > svg { width: 30px; height: 30px; margin-bottom: auto; }
+  .celda.foto { color: #f3f5f2; box-shadow: none; }
+  .celda.foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transition: transform 1.2s var(--ease); }
+  .celda.foto::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(8 16 11 / 0) 25%, rgb(8 16 11 / .5) 55%, rgb(8 16 11 / .88)); }
+  .celda.foto:hover img { transform: scale(1.04); }
+  .celda.foto p { color: rgb(243 245 242 / .85); }
+  .celda.a { grid-area: a; }
+  .celda.a h3 { font-size: clamp(1.7rem, 2.6vw, 2.3rem); }
+  .celda.b { grid-area: b; }
+  .celda.c { grid-area: c; background: var(--primary); color: var(--on-primary); box-shadow: none; }
+  .celda.c p { color: color-mix(in srgb, var(--on-primary) 78%, transparent); }
+  .celda.b img { object-position: center 30%; }
+  .celda.d { grid-area: d; }
+  .celda.d img { object-position: center 40%; }
+
+  /* servicio especial: casa lista */
+  .especial { position: relative; margin-top: 14px; border-radius: var(--r-lg); padding: clamp(32px, 5vw, 56px); background: var(--accent-soft); color: var(--accent-ink); display: grid; grid-template-columns: auto 1fr auto; gap: clamp(20px, 4vw, 48px); align-items: center; box-shadow: inset 0 0 0 2px var(--accent); }
+  .especial > svg { width: 56px; height: 56px; color: var(--accent); }
+  .especial .insignia { display: inline-block; margin-bottom: 12px; }
+  .especial h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--ink); margin-bottom: 10px; }
+  .especial p { font-size: 1.08rem; max-width: 52ch; }
+
+  /* recomendaciones */
+  .recos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 56px; }
+  .reco { border-radius: var(--r-lg); padding: 32px 28px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; gap: 24px; }
+  .reco p { font-size: 1.08rem; line-height: 1.5; flex: 1; }
+  .reco footer { border: 0; padding: 0; display: flex; align-items: center; gap: 12px; font-size: .95rem; color: var(--muted); }
+  .reco footer b { display: block; color: var(--ink); font-weight: 600; }
+  .reco-inicial { width: 42px; height: 42px; border-radius: 999px; display: grid; place-items: center; background: var(--primary); color: var(--on-primary); font-weight: 600; }
+
+  /* planes */
+  .planes-cab { display: grid; gap: 0; }
+  .planes { display: grid; grid-template-columns: 1fr 1fr 1.12fr; gap: 14px; margin-top: 56px; align-items: stretch; }
+  .plan { border-radius: var(--r-lg); padding: 32px 28px; display: flex; flex-direction: column; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+  .plan.fuerte { background: var(--primary); color: var(--on-primary); box-shadow: var(--shadow-lg); }
+  .plan-para { font-size: .9rem; color: var(--muted); }
+  .plan.fuerte .plan-para, .plan.fuerte li { color: color-mix(in srgb, var(--on-primary) 75%, transparent); }
+  .plan h3 { font-size: 1.7rem; margin: 6px 0 22px; display: flex; align-items: center; gap: 10px; }
+  .insignia { font-size: .72rem; font-weight: 600; letter-spacing: 0; padding: 4px 10px; border-radius: 999px; background: var(--accent); color: #221700; }
+  .precio { font-size: 2.3rem; font-weight: 500; line-height: 1; }
+  .precio small { font-family: "Geist", sans-serif; font-size: .9rem; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-left: 4px; }
+  .plan.fuerte .precio small { color: color-mix(in srgb, var(--on-primary) 70%, transparent); }
+  .plan ul { list-style: none; display: grid; gap: 12px; margin: 28px 0 32px; flex: 1; }
+  .plan li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; color: var(--muted); font-size: .98rem; }
+  .plan li svg { width: 18px; height: 18px; margin-top: 4px; color: var(--primary); }
+  .plan.fuerte li svg { color: var(--accent); }
+  .plan .btn { width: 100%; }
+  .plan.fuerte .btn { background: var(--on-primary); color: var(--primary); }
+  .plan.fuerte .btn:hover { background: color-mix(in srgb, var(--on-primary) 88%, var(--accent)); }
+  .notas { margin-top: 24px; color: var(--muted); font-size: .92rem; max-width: 80ch; }
+
+  /* turno minero */
+  .minero { position: relative; border-radius: clamp(24px, 3vw, 40px); overflow: hidden; margin-inline: clamp(8px, 1.2vw, 16px); color: #f3f5f2; isolation: isolate; min-height: 560px; display: grid; align-items: end; }
+  .minero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+  .minero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgb(8 14 10 / .82) 0%, rgb(8 14 10 / .55) 45%, rgb(8 14 10 / .05) 80%); }
+  .minero .wrap { padding: clamp(40px, 6vw, 80px) 0; display: grid; grid-template-columns: minmax(0, 560px); gap: 20px; }
+  .minero h2 { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
+  .minero p { color: rgb(243 245 242 / .82); font-size: 1.1rem; max-width: 46ch; }
+  .minero-fila { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 12px; }
+  .minero .precio small { color: rgb(243 245 242 / .7); }
+  .minero .btn { background: #f2f4f1; color: #1b3a2a; }
+  .minero .btn:hover { background: #fff; }
+
+  /* confianza */
+  .confianza { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
+  .confianza-foto { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 1; background: var(--surface-2); }
+  .confianza-foto img { width: 100%; height: 100%; object-fit: cover; }
+  .cita { font-size: clamp(1.45rem, 2.4vw, 2rem); font-weight: 500; letter-spacing: -0.03em; line-height: 1.25; }
+  .cita-autora { margin-top: 18px; color: var(--muted); font-size: .98rem; }
+  .garantias { list-style: none; display: grid; gap: 22px; margin-top: 44px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .garantias li { display: grid; grid-template-columns: 28px 1fr; gap: 14px; }
+  .garantias svg { width: 24px; height: 24px; color: var(--primary); margin-top: 2px; }
+  .garantias b { display: block; font-weight: 600; letter-spacing: -0.015em; }
+  .garantias span { color: var(--muted); font-size: .98rem; }
+
+  /* cierre */
+  .cierre { text-align: center; padding-bottom: 72px; }
+  .cierre h2 { font-size: clamp(2.4rem, 5.4vw, 4.4rem); max-width: 14ch; margin-inline: auto; }
+  .cierre p { color: var(--muted); font-size: 1.12rem; max-width: 44ch; margin: 20px auto 36px; }
+  .recomenda { display: flex; align-items: center; gap: 16px; max-width: 720px; margin: 64px auto 0; padding: 18px 22px; border-radius: var(--r-sm); background: var(--accent-soft); color: var(--accent-ink); text-align: left; font-size: .98rem; }
+  .recomenda svg { width: 26px; height: 26px; }
+  .recomenda b { color: var(--ink); }
+  .cierre .recomenda p { margin: 0; max-width: none; font-size: .98rem; color: inherit; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--muted); font-size: .9rem; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; align-items: center; }
+  footer .logo { color: var(--ink); font-size: 1rem; }
+  footer .logo-icono { width: 28px; height: 28px; }
+
+  /* aparición al hacer scroll */
+  .revela { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
+  .revela.visto { opacity: 1; transform: none; }
+
+  @media (max-width: 1024px) {
+    .nav-links a:not(.btn) { display: none; }
+  }
+  @media (max-width: 900px) {
+    .hero, .riesgos, .como-grid, .confianza { grid-template-columns: 1fr; }
+    .hero { min-height: 0; padding-bottom: 72px; }
+    .hero-visual { padding: 0 0 40px 40px; }
+    .hero-foto { aspect-ratio: 4 / 4.2; }
+    .telefono { width: 150px; border-radius: 26px; padding: 5px; }
+    .telefono img { border-radius: 22px; }
+    .riesgos-titulo { position: static; }
+    .como .telefono { width: 240px; border-radius: 34px; padding: 7px; }
+    .como .telefono img { border-radius: 28px; }
+    .bento { grid-template-columns: 1fr 1fr; grid-template-rows: 340px 420px 280px; grid-template-areas: "a a" "b c" "d d"; }
+    .especial { grid-template-columns: 1fr; }
+    .recos { grid-template-columns: 1fr; }
+    .planes { grid-template-columns: 1fr; }
+    .plan.fuerte { order: -1; }
+    .minero::after { background: linear-gradient(180deg, rgb(8 14 10 / .1) 0%, rgb(8 14 10 / .85) 60%); }
+    .confianza-foto { aspect-ratio: 16 / 10; }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    .nav .btn span { display: none; }
+    .nav .btn { width: 42px; padding: 0; }
+    .riesgos ul { grid-template-columns: 1fr; gap: 32px; }
+    .bento { grid-template-columns: 1fr; grid-template-rows: 380px 460px 220px 300px; grid-template-areas: "a" "b" "c" "d"; }
+    .especial .btn { width: 100%; }
+    .ctas .btn { flex: 1 1 100%; }
+    .minero { min-height: 620px; }
+    .recomenda { align-items: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .hero .entra, .revela { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Casa Habitada, inicio"><span class="logo-icono"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M240,204H228V144a12,12,0,0,0,12.49-19.78L142.14,25.85a20,20,0,0,0-28.28,0L15.51,124.2A12,12,0,0,0,28,144v60H16a12,12,0,0,0,0,24H240a12,12,0,0,0,0-24ZM52,121.65l76-76,76,76V204H164V152a12,12,0,0,0-12-12H104a12,12,0,0,0-12,12v52H52ZM140,204H116V164h24Z"/></svg></span><span class="marca">Casa Habitada</span></a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#como">Cómo funciona</a>
+      <a href="#incluye">Qué incluye</a>
+      <a href="#planes">Planes</a>
+      <a class="btn wa" href="#" aria-label="Consultar por WhatsApp"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg><span>Consultar por WhatsApp</span></a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow entra" style="--i:0"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z"/></svg> Salta, San Lorenzo, Vaqueros, La Caldera y La Calderilla</p>
+      <h1 class="entra" style="--i:1">No dejo tu casa vacía. <em>La cuido por vos.</em></h1>
+      <p class="sub entra" style="--i:2">Pileta, parque, mascotas y arreglos resueltos mientras no estás. Después de cada visita te llega un informe con fotos.</p>
+      <div class="ctas entra" style="--i:3">
+        <a class="btn wa" href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg> Consultar por WhatsApp</a>
+        <a class="btn sec" href="#planes">Ver planes <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,196.69V40a8,8,0,0,1,16,0V196.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z"/></svg></a>
+      </div>
+    </div>
+
+    <div class="hero-visual entra" style="--i:2">
+      <div class="hero-foto">
+        <img src="img/galeria-1200.webp" srcset="img/galeria-700.webp 700w, img/galeria-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 46vw" width="1200" height="1500" alt="Galería de una casa colonial con plantas y un perro descansando en la entrada" fetchpriority="high">
+      </div>
+      <div class="telefono entra">
+        <picture>
+          <source srcset="img/app-informe-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="img/app-informe-light.webp" width="780" height="1688" alt="Informe de una visita en el celular del dueño: fecha, hora, cantidad de visitas y fotos">
+        </picture>
+      </div>
+    </div>
+  </div>
+
+  <section class="wrap riesgos" aria-labelledby="t-sola">
+    <div class="riesgos-titulo">
+      <h2 class="titulo revela" id="t-sola">Una casa sola se nota. Y arreglarla sale caro.</h2>
+      <p class="bajada revela" style="--i:1">Te vas dos semanas y a la vuelta te espera lo que nadie vio a tiempo.</p>
+    </div>
+    <ul>
+      <li class="revela"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M174,47.75a254.19,254.19,0,0,0-41.45-38.3,8,8,0,0,0-9.18,0A254.19,254.19,0,0,0,82,47.75C54.51,79.32,40,112.6,40,144a88,88,0,0,0,176,0C216,112.6,201.49,79.32,174,47.75ZM128,216a72.08,72.08,0,0,1-72-72c0-57.23,55.47-105,72-118,16.53,13,72,60.75,72,118A72.08,72.08,0,0,1,128,216Zm55.89-62.66a57.6,57.6,0,0,1-46.56,46.55A8.75,8.75,0,0,1,136,200a8,8,0,0,1-1.32-15.89c16.57-2.79,30.63-16.85,33.44-33.45a8,8,0,0,1,15.78,2.68Z"/></svg><h3>Pileta verde</h3><p>Con quince días sin cuidado se pone verde. Recuperarla cuesta mucho más que mantenerla.</p></li>
+      <li class="revela" style="--i:1"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M224,48H32a8,8,0,0,0-8,8V192a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A8,8,0,0,0,224,48ZM203.43,64,128,133.15,52.57,64ZM216,192H40V74.19l82.59,75.71a8,8,0,0,0,10.82,0L216,74.19V192Z"/></svg><h3>Señales de ausencia</h3><p>Persianas bajas y correspondencia acumulada avisan que no hay nadie.</p></li>
+      <li class="revela" style="--i:2"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"/></svg><h3>Pérdidas que nadie ve</h3><p>Una canilla que gotea o una mancha en el techo terminan en una pared arruinada.</p></li>
+      <li class="revela" style="--i:3"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M212,80a28,28,0,1,0,28,28A28,28,0,0,0,212,80Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,212,120ZM72,108a28,28,0,1,0-28,28A28,28,0,0,0,72,108ZM44,120a12,12,0,1,1,12-12A12,12,0,0,1,44,120ZM92,88A28,28,0,1,0,64,60,28,28,0,0,0,92,88Zm0-40A12,12,0,1,1,80,60,12,12,0,0,1,92,48Zm72,40a28,28,0,1,0-28-28A28,28,0,0,0,164,88Zm0-40a12,12,0,1,1-12,12A12,12,0,0,1,164,48Zm23.12,100.86a35.3,35.3,0,0,1-16.87-21.14,44,44,0,0,0-84.5,0A35.25,35.25,0,0,1,69,148.82,40,40,0,0,0,88,224a39.48,39.48,0,0,0,15.52-3.13,64.09,64.09,0,0,1,48.87,0,40,40,0,0,0,34.73-72ZM168,208a24,24,0,0,1-9.45-1.93,80.14,80.14,0,0,0-61.19,0,24,24,0,0,1-20.71-43.26,51.22,51.22,0,0,0,24.46-30.67,28,28,0,0,1,53.78,0,51.27,51.27,0,0,0,24.53,30.71A24,24,0,0,1,168,208Z"/></svg><h3>Mascotas solas</h3><p>Perros que no quieren guardería, gatos o cualquier mascota: todos necesitan a alguien conocido que vaya cada día.</p></li>
+    </ul>
+  </section>
+
+  <section class="como" id="como" aria-labelledby="t-como">
+    <div class="wrap como-grid">
+      <div class="telefono revela">
+        <picture>
+          <source srcset="img/app-visita-dark.webp" media="(prefers-color-scheme: dark)">
+          <img src="img/app-visita-light.webp" width="780" height="1688" loading="lazy" alt="Pantalla de visita en curso: cada punto se marca como bien, novedad o no aplica">
+        </picture>
+      </div>
+      <div>
+        <h2 class="titulo revela" id="t-como">Vos te vas tranquilo. Yo me ocupo.</h2>
+        <p class="bajada revela" style="--i:1">No hago los arreglos: los gestiono. Coordino al piletero, al jardinero o al plomero, controlo el trabajo y te mando las fotos.</p>
+        <ol class="pasos">
+          <li class="paso revela"><span class="paso-icono"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M216.57,39.43A80,80,0,0,0,83.91,120.78L28.69,176A15.86,15.86,0,0,0,24,187.31V216a16,16,0,0,0,16,16H72a8,8,0,0,0,8-8V208H96a8,8,0,0,0,8-8V184h16a8,8,0,0,0,5.66-2.34l9.56-9.57A79.73,79.73,0,0,0,160,176h.1A80,80,0,0,0,216.57,39.43ZM224,98.1c-1.09,34.09-29.75,61.86-63.89,61.9H160a63.7,63.7,0,0,1-23.65-4.51,8,8,0,0,0-8.84,1.68L116.69,168H96a8,8,0,0,0-8,8v16H72a8,8,0,0,0-8,8v16H40V187.31l58.83-58.82a8,8,0,0,0,1.68-8.84A63.72,63.72,0,0,1,96,95.92c0-34.14,27.81-62.8,61.9-63.89A64,64,0,0,1,224,98.1ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></svg></span><div><h3>Conocemos la casa</h3><p>La recorremos juntos, armamos su lista de control, hacemos un inventario con fotos y firmamos un contrato con la regla de llaves.</p></div></li>
+          <li class="paso revela" style="--i:1"><span class="paso-icono"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M168,152a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,152Zm-8-40H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16Zm56-64V216a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V48A16,16,0,0,1,56,32H92.26a47.92,47.92,0,0,1,71.48,0H200A16,16,0,0,1,216,48ZM96,64h64a32,32,0,0,0-64,0ZM200,48H173.25A47.93,47.93,0,0,1,176,64v8a8,8,0,0,1-8,8H88a8,8,0,0,1-8-8V64a47.93,47.93,0,0,1,2.75-16H56V216H200Z"/></svg></span><div><h3>Paso y me fijo que todo esté bien</h3><p>Le doy una vuelta a la casa como si fuera mía: canillas, heladera, pileta, parque y mascotas. Abro, ventilo y muevo luces y persianas para que se vea con vida.</p></div></li>
+          <li class="paso revela" style="--i:2"><span class="paso-icono"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M208,56H180.28L166.65,35.56A8,8,0,0,0,160,32H96a8,8,0,0,0-6.65,3.56L75.71,56H48A24,24,0,0,0,24,80V192a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V80A24,24,0,0,0,208,56Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V80a8,8,0,0,1,8-8H80a8,8,0,0,0,6.66-3.56L100.28,48h55.43l13.63,20.44A8,8,0,0,0,176,72h32a8,8,0,0,1,8,8ZM128,88a44,44,0,1,0,44,44A44.05,44.05,0,0,0,128,88Zm0,72a28,28,0,1,1,28-28A28,28,0,0,1,128,160Z"/></svg></span><div><h3>Te llega el informe</h3><p>Al salir te mando un link con la hora de entrada y salida, lo revisado y las fotos. El historial de tu casa queda siempre a mano.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="incluye" aria-labelledby="t-incluye">
+    <h2 class="titulo revela" id="t-incluye">Todo lo que tu casa necesita mientras no estás</h2>
+    <div class="bento">
+      <article class="celda foto a revela">
+        <img src="img/pileta-villa-1000.webp" width="1000" height="750" loading="lazy" alt="Pileta limpia rodeada de plantas y reposeras">
+        <h3>Parque regado y pileta impecable</h3>
+        <p>Riego, control de cloro y visita del piletero coordinada. Al volver, todo está como lo dejaste.</p>
+      </article>
+      <article class="celda foto b revela" style="--i:1">
+        <img src="img/perro-gato-1000.webp" width="1000" height="1777" loading="lazy" alt="Un perro y un gato juntos en la escalera de su casa">
+        <h3>Mascotas en su casa</h3>
+        <p>Perros, gatos o cualquier mascota, cada uno en su lugar de siempre. Voy todos los días: comida, agua, compañía y veterinario si hace falta.</p>
+      </article>
+      <article class="celda c revela" style="--i:2">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M176,232a8,8,0,0,1-8,8H88a8,8,0,0,1,0-16h80A8,8,0,0,1,176,232Zm40-128a87.55,87.55,0,0,1-33.64,69.21A16.24,16.24,0,0,0,176,186v6a16,16,0,0,1-16,16H96a16,16,0,0,1-16-16v-6a16,16,0,0,0-6.23-12.66A87.59,87.59,0,0,1,40,104.49C39.74,56.83,78.26,17.14,125.88,16A88,88,0,0,1,216,104Zm-16,0a72,72,0,0,0-73.74-72c-39,.92-70.47,33.39-70.26,72.39a71.65,71.65,0,0,0,27.64,56.3A32,32,0,0,1,96,186v6h64v-6a32.15,32.15,0,0,1,12.47-25.35A71.65,71.65,0,0,0,200,104Zm-16.11-9.34a57.6,57.6,0,0,0-46.56-46.55,8,8,0,0,0-2.66,15.78c16.57,2.79,30.63,16.85,33.44,33.45A8,8,0,0,0,176,104a9,9,0,0,0,1.35-.11A8,8,0,0,0,183.89,94.66Z"/></svg>
+        <h3>Casa que se ve habitada</h3>
+        <p>Luces, persianas y correspondencia, para que nadie note que te fuiste.</p>
+      </article>
+      <article class="celda foto d revela">
+        <img src="img/arreglo-1200.webp" width="1200" height="900" loading="lazy" alt="Plomero arreglando la cañería debajo de una pileta de cocina">
+        <h3>Arreglos coordinados</h3>
+        <p>Si aparece una avería, llamo al profesional, lo acompaño y te aviso. Vos no llamás a nadie.</p>
+      </article>
+
+    </div>
+    <article class="especial revela">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M197.58,129.06,146,110l-19-51.62a15.92,15.92,0,0,0-29.88,0L78,110l-51.62,19a15.92,15.92,0,0,0,0,29.88L78,178l19,51.62a15.92,15.92,0,0,0,29.88,0L146,178l51.62-19a15.92,15.92,0,0,0,0-29.88ZM137,164.22a8,8,0,0,0-4.74,4.74L112,223.85,91.78,169A8,8,0,0,0,87,164.22L32.15,144,87,123.78A8,8,0,0,0,91.78,119L112,64.15,132.22,119a8,8,0,0,0,4.74,4.74L191.85,144ZM144,40a8,8,0,0,1,8-8h16V16a8,8,0,0,1,16,0V32h16a8,8,0,0,1,0,16H184V64a8,8,0,0,1-16,0V48H152A8,8,0,0,1,144,40ZM248,88a8,8,0,0,1-8,8h-8v8a8,8,0,0,1-16,0V96h-8a8,8,0,0,1,0-16h8V72a8,8,0,0,1,16,0v8h8A8,8,0,0,1,248,88Z"/></svg>
+      <div>
+        <span class="insignia">Servicio especial</span>
+        <h3>Casa lista para tu regreso</h3>
+        <p>Limpieza a fondo, casa ventilada y heladera con lo básico. Llegás y no tenés que hacer nada.</p>
+      </div>
+      <a class="btn wa" data-servicio="Casa lista para tu regreso" href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg> Pedirlo</a>
+    </article>
+  </section>
+
+  <section class="wrap" id="planes" aria-labelledby="t-planes">
+    <h2 class="titulo revela" id="t-planes">Planes según cuánto tiempo te vas</h2>
+    <p class="bajada revela" style="--i:1">Si hay mascotas, voy todos los días. Todos los planes incluyen informe con fotos en cada visita y guardia por WhatsApp.</p>
+    <div class="planes">
+      <article class="plan revela">
+        <span class="plan-para">Casas sin mascotas, de fin de semana</span>
+        <h3>Tranquilo</h3>
+        <p class="precio mono">$95.000<small>por mes</small></p>
+        <ul>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>1 visita por semana</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Lista de control completa</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Correspondencia, luces y persianas</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Riego de macetas</li>
+        </ul>
+        <a class="btn sec wa" data-plan="Tranquilo" href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg> Consultar por WhatsApp</a>
+      </article>
+      <article class="plan revela" style="--i:1">
+        <span class="plan-para">Casas sin mascotas, viajes largos</span>
+        <h3>Presente</h3>
+        <p class="precio mono">$320.000<small>por mes</small></p>
+        <ul>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>3 visitas por semana</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Pileta con control de cloro</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Riego del parque</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Coordino piletero, jardinero y arreglos</li>
+        </ul>
+        <a class="btn sec wa" data-plan="Presente" href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg> Consultar por WhatsApp</a>
+      </article>
+      <article class="plan fuerte revela" style="--i:2">
+        <span class="plan-para">Casas con mascotas</span>
+        <h3>Compañía <span class="insignia">Visita diaria</span></h3>
+        <p class="precio mono">$480.000<small>por mes</small></p>
+        <ul>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Visita todos los días</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>3 veces por semana, visita completa de la casa, pileta y parque</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Comida, agua, limpieza y un rato de juego o paseo</li>
+          <li><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M232.49,80.49l-128,128a12,12,0,0,1-17,0l-56-56a12,12,0,1,1,17-17L96,183,215.51,63.51a12,12,0,0,1,17,17Z"/></svg>Veterinario si hace falta</li>
+        </ul>
+        <a class="btn wa" data-plan="Compañía" href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg> Consultar por WhatsApp</a>
+      </article>
+    </div>
+    <p class="notas revela">Casas grandes o con pileta: 20 % más. Los arreglos (piletero, plomero, veterinario) se pagan aparte, con un 15 % por la gestión. Visita suelta: <span class="mono">$22.000</span>.</p>
+  </section>
+
+  <section class="minero" aria-labelledby="t-minero">
+    <img src="img/valle-1800.webp" srcset="img/valle-800.webp 800w, img/valle-1800.webp 1800w" sizes="100vw" width="1800" height="1000" loading="lazy" alt="Valle del norte argentino con un pueblo y cerros al fondo">
+    <div class="wrap">
+      <h2 class="revela">Plan Turno Minero</h2>
+      <p class="revela" style="--i:1">¿Trabajás en la Puna con turnos rotativos? Me pasás tu calendario y visito tu casa durante todo el turno, todos los días si dejás mascotas. El día antes de que bajes, te la dejo lista.</p>
+      <div class="minero-fila revela" style="--i:2">
+        <p class="precio mono">$170.000<small>por turno de 14 días. Con mascotas, $280.000</small></p>
+        <a class="btn wa" data-plan="Turno Minero" href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg> Consultar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap confianza" aria-labelledby="t-confianza">
+    <div class="confianza-foto revela">
+      <img src="img/llaves-1000.webp" width="1000" height="1000" loading="lazy" alt="Mano sosteniendo las llaves de una casa">
+    </div>
+    <div>
+      <h2 id="t-confianza" hidden>Confianza</h2>
+      <blockquote class="revela">
+        <p class="cita">“Los dueños no le dejan la llave a cualquiera. Por eso cada casa tiene contrato, inventario y el registro de cada vez que entro.”</p>
+        <p class="cita-autora">Virginia Vilanova, a cargo de <span class="marca">Casa Habitada</span>. Hace 2 años que cuida casas en Salta y alrededores.</p>
+      </blockquote>
+      <ul class="garantias">
+        <li class="revela"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M216.57,39.43A80,80,0,0,0,83.91,120.78L28.69,176A15.86,15.86,0,0,0,24,187.31V216a16,16,0,0,0,16,16H72a8,8,0,0,0,8-8V208H96a8,8,0,0,0,8-8V184h16a8,8,0,0,0,5.66-2.34l9.56-9.57A79.73,79.73,0,0,0,160,176h.1A80,80,0,0,0,216.57,39.43ZM224,98.1c-1.09,34.09-29.75,61.86-63.89,61.9H160a63.7,63.7,0,0,1-23.65-4.51,8,8,0,0,0-8.84,1.68L116.69,168H96a8,8,0,0,0-8,8v16H72a8,8,0,0,0-8,8v16H40V187.31l58.83-58.82a8,8,0,0,0,1.68-8.84A63.72,63.72,0,0,1,96,95.92c0-34.14,27.81-62.8,61.9-63.89A64,64,0,0,1,224,98.1ZM192,76a12,12,0,1,1-12-12A12,12,0,0,1,192,76Z"/></svg><div><b>Regla de llaves por escrito</b><span>Quién tiene las copias, dónde se guardan y cuándo se devuelven.</span></div></li>
+        <li class="revela" style="--i:1"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M75.19,198.4a8,8,0,0,0,11.21-1.6,52,52,0,0,1,83.2,0,8,8,0,1,0,12.8-9.6A67.88,67.88,0,0,0,155,165.51a40,40,0,1,0-53.94,0A67.88,67.88,0,0,0,73.6,187.2,8,8,0,0,0,75.19,198.4ZM128,112a24,24,0,1,1-24,24A24,24,0,0,1,128,112Zm72-88H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V40A16,16,0,0,0,200,24Zm0,192H56V40H200ZM88,64a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H96A8,8,0,0,1,88,64Z"/></svg><div><b>Identificación visible</b><span>Remera y credencial, para que los vecinos y la guardia sepan quién entra.</span></div></li>
+        <li class="revela" style="--i:2"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/></svg><div><b>Cada entrada queda registrada</b><span>Fecha, hora y fotos de cada visita, siempre disponibles para vos.</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap" id="recomiendan" aria-labelledby="t-recos">
+    <h2 class="titulo revela" id="t-recos">Quienes me recomiendan</h2>
+    <p class="bajada revela" style="--i:1">Familias de la zona que ya me dejaron su casa y sus mascotas.</p>
+    <div class="recos">
+      <blockquote class="reco revela">
+        <p>“Tengo dos perros que no se llevan bien con las guarderías. Con Virginia se quedan en casa, comen, salen al parque y no extrañan tanto. Y la casa la encuentro igual que como la dejé.”</p>
+        <footer><span class="reco-inicial" aria-hidden="true">R</span><span><b>Rodrigo</b>Fidelina, dos perros</span></footer>
+      </blockquote>
+      <blockquote class="reco revela" style="--i:1">
+        <p>“Mis dos gatas quedan cuidadas y yo me voy tranquila. Virginia prende las luces, cierra puertas y ventanas, y la casa queda segura todo el tiempo que no estoy.”</p>
+        <footer><span class="reco-inicial" aria-hidden="true">A</span><span><b>Ana Laura</b>San Lorenzo y ahora Vaqueros, dos gatas</span></footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="wrap cierre" aria-labelledby="t-cierre">
+    <h2 class="revela" id="t-cierre">¿Te vas pronto? Hablemos.</h2>
+    <p class="revela" style="--i:1">Contame cuándo te vas, cómo es la casa y si hay mascotas. Te respondo con el plan que te conviene.</p>
+    <a class="btn wa revela" style="--i:2" href="#"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,88.1,0,0,0,88,88A40,40,0,0,0,192,152Z"/></svg> Consultar por WhatsApp</a>
+    <div class="recomenda revela">
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M216,72H180.92c.39-.33.79-.65,1.17-1A29.53,29.53,0,0,0,192,49.57,32.62,32.62,0,0,0,158.44,16,29.53,29.53,0,0,0,137,25.91a54.94,54.94,0,0,0-9,14.48,54.94,54.94,0,0,0-9-14.48A29.53,29.53,0,0,0,97.56,16,32.62,32.62,0,0,0,64,49.57,29.53,29.53,0,0,0,73.91,71c.38.33.78.65,1.17,1H40A16,16,0,0,0,24,88v32a16,16,0,0,0,16,16v64a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V136a16,16,0,0,0,16-16V88A16,16,0,0,0,216,72ZM149,36.51a13.69,13.69,0,0,1,10-4.5h.49A16.62,16.62,0,0,1,176,49.08a13.69,13.69,0,0,1-4.5,10c-9.49,8.4-25.24,11.36-35,12.4C137.7,60.89,141,45.5,149,36.51Zm-64.09.36A16.63,16.63,0,0,1,96.59,32h.49a13.69,13.69,0,0,1,10,4.5c8.39,9.48,11.35,25.2,12.39,34.92-9.72-1-25.44-4-34.92-12.39a13.69,13.69,0,0,1-4.5-10A16.6,16.6,0,0,1,84.87,36.87ZM40,88h80v32H40Zm16,48h64v64H56Zm144,64H136V136h64Zm16-80H136V88h80v32Z"/></svg>
+      <p><b>Recomendá y ganá.</b> Si alguien contrata un plan porque vos lo recomendaste, tu próxima semana de servicio es gratis.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#"><span class="logo-icono"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="M240,204H228V144a12,12,0,0,0,12.49-19.78L142.14,25.85a20,20,0,0,0-28.28,0L15.51,124.2A12,12,0,0,0,28,144v60H16a12,12,0,0,0,0,24H240a12,12,0,0,0,0-24ZM52,121.65l76-76,76,76V204H164V152a12,12,0,0,0-12-12H104a12,12,0,0,0-12,12v52H52ZM140,204H116V164h24Z"/></svg></span><span class="marca">Casa Habitada</span></a>
+    <span>Cuidado de casas en Salta capital, San Lorenzo, Vaqueros, La Caldera, La Calderilla, Cerrillos y alrededores</span>
+    <span>© <span id="anio"></span> <span class="marca">Casa Habitada</span></span>
+  </div>
+</footer>
+
+<script>
+  // ===== CONFIGURACIÓN: cambiá estos dos valores =====
+  const NOMBRE_MARCA = "Casa Habitada";
+  const WHATSAPP = "5493815539646"; // de prueba // tu número: 549 + característica sin 0 + número sin 15
+  // ===================================================
+
+  document.querySelectorAll(".marca").forEach((el) => (el.textContent = NOMBRE_MARCA));
+  document.getElementById("anio").textContent = new Date().getFullYear();
+
+  document.querySelectorAll("a.wa").forEach((a) => {
+    const plan = a.dataset.plan;
+    const servicio = a.dataset.servicio;
+    const texto = servicio
+      ? `Hola! Me interesa el servicio "${servicio}" de ${NOMBRE_MARCA}.`
+      : plan
+      ? `Hola! Me interesa el plan ${plan} de ${NOMBRE_MARCA}.`
+      : `Hola! Quiero consultar por el cuidado de mi casa.`;
+    a.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`;
+    a.target = "_blank";
+    a.rel = "noopener";
+  });
+
+  // Borde de la barra al bajar, sin escuchar el scroll
+  const centinela = document.createElement("div");
+  centinela.style.cssText = "position:absolute;top:0;height:8px;width:1px";
+  document.body.prepend(centinela);
+  new IntersectionObserver(([e]) => document.getElementById("nav").classList.toggle("con-borde", !e.isIntersecting)).observe(centinela);
+
+  // Aparición de secciones al entrar en pantalla
+  const io = new IntersectionObserver((entradas) => {
+    entradas.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visto"); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+  document.querySelectorAll(".revela").forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
