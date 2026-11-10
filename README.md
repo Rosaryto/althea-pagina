@@ -34,6 +34,11 @@
 - `img/` tiene las fotos livianas que usa la página; `img-originales/` (no se sube) las de tamaño completo.
 - Se publica en Netlify (proyecto `althea-hogar`).
 
+
+## Licencia
+
+© 2026 Lambda Lab Norte. Todos los derechos reservados. El código está visible como muestra de trabajo, pero no se puede copiar, usar ni modificar sin autorización. Ver [LICENSE](LICENSE).
+
 ---
 
 <p align="center">
