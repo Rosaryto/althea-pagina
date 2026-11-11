@@ -288,7 +288,9 @@ h2 em{font-style:italic;font-weight:400;color:var(--oro)}
 footer{border-top:1px solid var(--linea-n);color:#8792ab;font-size:14px;padding-block:26px calc(26px + env(safe-area-inset-bottom,0px))}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:14px 24px;flex-wrap:wrap}
 .credito{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#8792ab}
-.credito img{height:16px;width:auto;opacity:.85}
+.credito img{height:16px;width:auto;opacity:.85;transition:opacity .2s}
+.credito a{display:inline-flex;border-radius:4px}
+.credito a:hover img,.credito a:focus-visible img{opacity:1}
 @media (max-width:700px){footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}footer .wrap{flex-direction:column;align-items:flex-start}}
 
 /* la app de informes */
@@ -590,7 +592,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
   <div class="wrap">
     <span>© 2026 Althea · Hogar &amp; Mascotas</span>
     <span>Salta y alrededores · Viajá tranquilo.</span>
-    <span class="credito">Plataforma realizada por <img src="img/lambda-lab-norte.webp" alt="Lambda Lab Norte" width="131" height="16" loading="lazy"></span>
+    <span class="credito">Plataforma realizada por <a href="https://www.lambdalab.com.ar/" target="_blank" rel="noopener" aria-label="Lambda Lab Norte (abre su web en otra pestaña)"><img src="img/lambda-lab-norte.webp" alt="Lambda Lab Norte" width="131" height="16" loading="lazy"></a></span>
   </div>
 </footer>
 
