@@ -300,22 +300,8 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .app-puntos span{color:var(--gris);font-size:15.5px}
 .tel{justify-self:center;width:min(320px,100%);border-radius:44px;padding:12px;background:var(--tinta);box-shadow:0 40px 70px -30px rgb(19 33 61 / .55);transform:rotate(2deg)}
 .tel-pantalla{border-radius:34px;overflow:hidden;background:var(--papel);padding:18px 16px 22px;display:grid;gap:14px;font-size:13px;color:var(--tinta)}
-.tel-isla{justify-self:center;width:84px;height:22px;border-radius:999px;background:var(--tinta);margin-bottom:2px}
-.inf-top{display:flex;align-items:center;gap:10px}
-.inf-top img{width:34px;height:34px;border-radius:9px;background:var(--papel-2);padding:2px}
-.inf-top b{display:block;font-size:15px;line-height:1.1}
-.inf-top small{color:var(--gris);font-size:11.5px}
-.inf-estado{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding:14px;border-radius:16px;background:#dcebe1}
-.inf-estado svg{width:26px;height:26px;fill:#2f6b48}
-.inf-estado b{display:block;font-size:15px;line-height:1.2}
-.inf-estado span{display:block;color:#3c4a42;font-size:12px;margin-top:3px}
-.inf-estado i{display:block;font-size:12.5px;margin-top:8px;color:var(--tinta)}
-.inf-tit{font-weight:700;font-size:12.5px}
-.inf-fotos{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.inf-fotos img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:10px}
-.inf-fotos img:first-child{grid-column:1/-1;aspect-ratio:16/10}
-.inf-mes{color:var(--gris);font-size:12px}
-.inf-mes b{color:var(--tinta)}
+.tel-pantalla.con-video{padding:0;display:block;aspect-ratio:600/1298;background:var(--papel)}
+.tel-pantalla.con-video video{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-select:none;user-select:none}
 .app-nota{margin-top:14px;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gris)}
 @media (max-width:900px){.app-grid{grid-template-columns:1fr}.tel{transform:none}}
 
@@ -530,24 +516,12 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
       </ul>
     </div>
     <figure>
-      <div class="tel" role="img" aria-label="Ejemplo del informe que ve el cliente en su celular: Tu casa está en orden, con fotos de la última visita">
-        <div class="tel-pantalla">
-          <div class="tel-isla"></div>
-          <div class="inf-top"><img src="img/althea-icono.webp" alt="" width="34" height="34" loading="lazy"><span><b>Althea</b><small>Informe de cuidado de tu casa</small></span></div>
-          <div class="inf-estado">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1.2 14.2-4-4 1.4-1.4 2.6 2.6 5.6-5.6 1.4 1.4z"/></svg>
-            <div><b>Tu casa está en orden</b><span>Última visita: hoy a las 10:05</span><i>“Toto y Luna comieron, tomaron agua y salieron a pasear.”</i></div>
-          </div>
-          <span class="inf-tit">Fotos de la última visita</span>
-          <div class="inf-fotos">
-            <img src="img/informe-perro.webp" alt="" width="500" height="312" loading="lazy">
-            <img src="img/informe-gato.webp" alt="" width="260" height="260" loading="lazy">
-            <img src="img/informe-riego.webp" alt="" width="260" height="260" loading="lazy">
-          </div>
-          <p class="inf-mes">En los últimos 30 días: <b>12 visitas</b>, sin novedades.</p>
+      <div class="tel" role="img" aria-label="Video de la aplicación en uso: la lista de control de una visita, el comprobante y el informe con fotos que recibe el cliente">
+        <div class="tel-pantalla con-video">
+          <video src="img/app-en-uso.mp4" poster="img/app-en-uso-poster.webp" width="600" height="1298" autoplay muted loop playsinline preload="metadata" disablepictureinpicture disableremoteplayback controlslist="nodownload nofullscreen noremoteplayback" aria-hidden="true" tabindex="-1"></video>
         </div>
       </div>
-      <figcaption class="app-nota">Así ve el informe cada cliente (ejemplo)</figcaption>
+      <figcaption class="app-nota">Así funciona la app en cada visita (ejemplo)</figcaption>
     </figure>
   </div>
 </section>
@@ -625,6 +599,10 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 </a>
 
 <script>
+document.querySelectorAll('.con-video video').forEach(v=>{
+  v.addEventListener('contextmenu',e=>e.preventDefault());
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause()}
+});
 /* ===== EDITÁ ACÁ ===== */
 // Número de WhatsApp: 549 + código de área sin 0 + número sin 15.
 const WHATSAPP = '5491149278087'
